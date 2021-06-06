@@ -11,7 +11,7 @@
 # YOUR CODE HERE 1 to read the file
 #raise NotImplementedError()
 import pandas as pd 
-
+data=pd.read_table("data/travelTimes_2015_Helsinki.txt",sep=';')
 #Check how many rows and columns there are:
 data
 
@@ -25,6 +25,7 @@ print(data.head())
 # 
 
 # YOUR CODE HERE 2 to set `data`
+data=data.filter(['x','y','x','y'])
 
 # CODE FOR TESTING YOUR SOLUTION
 print(list(data.columns))
@@ -34,7 +35,8 @@ print(list(data.columns))
 # 
 
 # YOUR CODE HERE 3 to define empty lists orig_points and dest_points
-
+orig_points=[]
+dest_points=[]
 # CODE FOR TESTING YOUR SOLUTION
 
 # List length should be zero at this point:
@@ -68,6 +70,10 @@ print('dest_points length:', len(dest_points))
 
 # YOUR CODE HERE 4 to append points in orig_points and dest_points
 from shapely.geometry import Point
+for index,data in data.iterrows():
+  orig=points.append(data_orig)
+  dest_points.append(data_dest)
+
 
 # CODE FOR TESTING YOUR SOLUTION
 
@@ -95,7 +101,7 @@ assert len(dest_points) == len(data), "Number of destination points must be the 
 
 # YOUR CODE HERE 5
 
-
+lines=[]
 # CODE FOR TESTING YOUR SOLUTION
 
 # Lines length should be zero at this stage:
@@ -114,6 +120,10 @@ print('lines length:', len(lines))
 # YOUR CODE HERE 6 to append LineString to lines
 #raise NotImplementedError()
 from shapely.geometry import LineString
+for orig,dest in zip(orig_points.dest_points):
+  line=LineString([data_orig,data_dest])
+  lines.append(line)
+
 
 # CODE FOR TESTING YOUR SOLUTION
 
@@ -127,7 +137,9 @@ assert len(lines) == len(data), "There should be as many lines as there are rows
 # 
 
 # YOUR CODE HERE 7 to find total length
-
+total_length=0.0
+for line in lines:
+  total_length+=line.length
 # CODE FOR TESTING YOUR SOLUTION
 
 # This test print should print the total length of all lines
@@ -144,7 +156,17 @@ print("Total length of all lines is", round(total_length, 2))
 # **Note: avoid using the same variable names as earlier inside your functions!** Functions are often defined at the top of the script file (or jupyter notebook), and now that we have them here at the very end you might accidentally alter an existing variable inside your functions. To avoid this, alter the variable names inside your own functions if you re-use code from this notebook. 
 
 # YOUR CODE HERE 8 to define create_od_lines() and calculate_total_distance()
+def create_od_lines(x,y):
+  for orig,dest in zip(x,y):
+    line=LineString([orig,dest])
+    od_lines.append(line)
+    return od_lines
 
+    def calculate_total_distance(line):
+      total_length=0
+      for line in od_lines:
+        total_length+=line.length
+        return total_length
 
 # CODE FOR TESTING YOUR SOLUTION
 
